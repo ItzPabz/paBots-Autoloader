@@ -1,4 +1,4 @@
-# Modular Discord Bot System
+# paBots Modular Bot System
 
 This system is designed to be a modular Discord bot system. The main autoloader `main.py` is responsible for loading each module and allowing it to run on one machine.
 
