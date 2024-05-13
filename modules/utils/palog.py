@@ -3,7 +3,7 @@ import colorama as clr
 import datetime
 import sys
 
-DEBUG_MODE = True
+DEBUG_MODE = False
 sys.dont_write_bytecode = True
 
 def timestamp():
