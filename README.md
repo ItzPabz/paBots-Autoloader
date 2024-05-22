@@ -28,4 +28,4 @@ Please note that the system is designed to be used with Python's `asyncio` libra
 If you need help with the system, please contact me on Discord at `pabz.` I can be found in my community [Discord](https://discord.gg/redberry).
 
 ## Purchasable Modules
-- (WIP) [RustMaps](https://redberry.gg) - A module that allows you to view and create Rust maps in Discord.
+- [RustMaps Module](https://codefling.com/discord-bots/pabots-rustmaps-module) - A module that allows you to view and create Rust maps in Discord.
