@@ -2,6 +2,8 @@ import asyncio
 import os
 import sys
 import importlib
+import requests
+import aiohttp
 sys.dont_write_bytecode = True
 import modules.utils.palog as log
 
@@ -40,8 +42,35 @@ async def module_loader():
     except asyncio.CancelledError:
         log.info('[MAIN LOADER] Closing all modules safely.')
 
+async def autoupdate():
+    try:
+        async with aiohttp.ClientSession() as session:
+            response = await session.get('https://api.github.com/repos/ItzPabz/paBots-Autoloader/contents/')
+            if response.status == 200:
+                files = await response.json()
+                for file in files:
+                    if file['type'] == 'file':
+                        file_name = file['name']
+                        file_url = file['download_url']
+                        response = await session.get(file_url)
+                        if response.status == 200:
+                            content = await response.text()
+                            if not os.path.isfile(file_name) or content != open(file_name, 'r', encoding='utf-8').read():
+                                with open(file_name, 'w', encoding='utf-8') as f:
+                                    f.write(content)
+                                log.debug(f'[AUTOUPDATE] Updated {file_name} successfully.')
+                            else:
+                                log.debug(f'[AUTOUPDATE] {file_name} is up to date.')
+                        else:
+                            log.error(f'[AUTOUPDATE] Failed to update {file_name}. Status code: {response.status}')
+            else:
+                log.error(f'[AUTOUPDATE] Failed to retrieve repository contents. Status code: {response.status}')
+    except Exception as e:
+        log.error(f'[AUTOUPDATE] An error occurred during autoupdate.\n{e}')
+
 async def main():
     try:
+        await autoupdate()
         await module_loader()
     except KeyboardInterrupt:
         log.info('[MAIN LOADER] Keyboard interrupt. Exiting.')
