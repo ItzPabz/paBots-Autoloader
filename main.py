@@ -2,7 +2,6 @@ import asyncio
 import os
 import sys
 import importlib
-import requests
 import aiohttp
 sys.dont_write_bytecode = True
 import modules.utils.palog as log
